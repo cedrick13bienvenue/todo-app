@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import { todoRouter } from './modules/todo/todo.router';
+import { httpLogger } from './common/middleware/httpLogger';
 
 const app = express();
 
@@ -9,6 +10,7 @@ const app = express();
 app.use(helmet());
 app.use(cors());
 app.use(express.json());
+app.use(httpLogger);
 
 // Routes
 app.use('/todos', todoRouter);

@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: todo-app
-        image: todo-app:latest
+        image: cedrick13bienvenue/todo-app:latest
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 3000

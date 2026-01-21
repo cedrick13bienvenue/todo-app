@@ -38,7 +38,7 @@ resource "aws_security_group" "todo_sg" {
 
 resource "aws_instance" "todo_server" {
   ami           = "ami-0c7217cdde317cfec" # Ubuntu 22.04 LTS (us-east-1)
-  instance_type = "t2.micro"
+  instance_type = "t3.micro"
   security_groups = [aws_security_group.todo_sg.name]
 
   user_data = <<-EOF
@@ -47,7 +47,7 @@ resource "aws_instance" "todo_server" {
               apt-get install -y docker.io
               systemctl start docker
               systemctl enable docker
-              docker run -d -p 3000:3000 --name todo-app cedrick13/todo-app:latest
+              docker run -d -p 3000:3000 --name todo-app cedrick13bienvenue/todo-app:latest
               EOF
 
   tags = {

@@ -12,10 +12,12 @@ app.use(cors());
 app.use(express.json());
 app.use(httpLogger);
 
+import { healthRouter } from './modules/health/health.router';
+
 // Routes
 app.use('/todos', todoRouter);
+app.use('/health', healthRouter);
 
-// Health check (preview for later phases)
 app.get('/', (req, res) => {
     res.send({ status: 'API is running' });
 });

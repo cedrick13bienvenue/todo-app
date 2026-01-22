@@ -14,10 +14,12 @@ app.use(httpLogger);
 
 import { healthRouter } from './modules/health/health.router';
 import { metricsRegistry } from './modules/health/metrics';
+import { authRouter } from './modules/auth/auth.routes';
 
 // Routes
 app.use('/todos', todoRouter);
 app.use('/health', healthRouter);
+app.use('/auth', authRouter);
 
 app.get('/metrics', async (req, res) => {
     res.setHeader('Content-Type', metricsRegistry.contentType);

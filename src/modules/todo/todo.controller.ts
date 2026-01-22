@@ -55,6 +55,15 @@ export class TodoController {
             res.status(500).json({ error: 'Internal Server Error' });
         }
     }
+
+    async getStats(req: Request, res: Response) {
+        try {
+            const stats = await todoService.getStats();
+            res.status(200).json(stats);
+        } catch (error) {
+            res.status(500).json({ error: 'Internal Server Error' });
+        }
+    }
 }
 
 export const todoController = new TodoController();

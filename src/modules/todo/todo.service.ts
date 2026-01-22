@@ -39,6 +39,16 @@ export class TodoService {
         this.todos = this.todos.filter(t => t.id !== id);
         return this.todos.length !== initialLength;
     }
+
+    async getStats(): Promise<{ total: number; completed: number; pending: number }> {
+        const total = this.todos.length;
+        const completed = this.todos.filter(t => t.completed).length;
+        return {
+            total,
+            completed,
+            pending: total - completed
+        };
+    }
 }
 
 export const todoService = new TodoService();

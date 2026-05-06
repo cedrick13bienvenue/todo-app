@@ -16,7 +16,7 @@ describe('TodoService', () => {
 
     it('should create a todo', async () => {
         const mockTodo = { id: '1', title: 'Test Todo', completed: false, createdAt: new Date() };
-        (todoRepository.create as jest.Mock).mockResolvedValue(mockTodo);
+        (todoRepository.create as any).mockResolvedValue(mockTodo);
 
         const todo = await todoService.create({ title: 'Test Todo' });
         expect(todoRepository.create).toHaveBeenCalledWith({ title: 'Test Todo' });
@@ -29,7 +29,7 @@ describe('TodoService', () => {
             { id: '1', title: 'T1', completed: false, createdAt: new Date() },
             { id: '2', title: 'T2', completed: true, createdAt: new Date() }
         ];
-        (todoRepository.findAll as jest.Mock).mockResolvedValue(mockTodos);
+        (todoRepository.findAll as any).mockResolvedValue(mockTodos);
 
         const todos = await todoService.findAll();
         expect(todoRepository.findAll).toHaveBeenCalled();

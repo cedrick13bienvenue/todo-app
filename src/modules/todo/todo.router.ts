@@ -68,7 +68,7 @@ router.get('/', (req, res, next) => todoController.getAll(req, res, next));
  *                 pending:
  *                   type: number
  */
-router.get('/stats', (req, res) => todoController.getStats(req, res));
+router.get('/stats', (req, res, next) => todoController.getStats(req, res, next));
 
 /**
  * @swagger
@@ -125,10 +125,8 @@ router.get('/stats', (req, res) => todoController.getStats(req, res));
  *       200:
  *         description: Updated todo
  */
-router.get('/:id', (req, res) => todoController.getById(req, res));
-router.patch('/:id', validate(updateTodoSchema), (req, res) =>
-    todoController.update(req, res)
-);
-router.delete('/:id', (req, res) => todoController.delete(req, res));
+router.get('/:id', (req, res, next) => todoController.getById(req, res, next));
+router.patch('/:id', validate(updateTodoSchema), (req, res, next) => todoController.update(req, res, next));
+router.delete('/:id', (req, res, next) => todoController.delete(req, res, next));
 
 export const todoRouter = router;

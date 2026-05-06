@@ -28,7 +28,7 @@ describe('Todo API Integration Tests', () => {
             .post('/todos')
             .send({ title: 'Integration Test Todo' })
             .expect(201);
-        
+
         expect(response.body).toHaveProperty('id');
         expect(response.body.title).toBe('Integration Test Todo');
         expect(response.body.completed).toBe(false);
@@ -37,10 +37,8 @@ describe('Todo API Integration Tests', () => {
     });
 
     it('GET /todos - should return all todos', async () => {
-        const response = await request(app)
-            .get('/todos')
-            .expect(200);
-        
+        const response = await request(app).get('/todos').expect(200);
+
         expect(Array.isArray(response.body)).toBeTruthy();
         expect(response.body.length).toBeGreaterThan(0);
         expect(response.body[0].title).toBe('Integration Test Todo');
@@ -50,7 +48,7 @@ describe('Todo API Integration Tests', () => {
         const response = await request(app)
             .get(`/todos/${createdTodoId}`)
             .expect(200);
-        
+
         expect(response.body.id).toBe(createdTodoId);
     });
 
@@ -59,17 +57,13 @@ describe('Todo API Integration Tests', () => {
             .patch(`/todos/${createdTodoId}`)
             .send({ completed: true })
             .expect(200);
-        
+
         expect(response.body.completed).toBe(true);
     });
 
     it('DELETE /todos/:id - should delete todo', async () => {
-        await request(app)
-            .delete(`/todos/${createdTodoId}`)
-            .expect(204);
-        
-        await request(app)
-            .get(`/todos/${createdTodoId}`)
-            .expect(404);
+        await request(app).delete(`/todos/${createdTodoId}`).expect(204);
+
+        await request(app).get(`/todos/${createdTodoId}`).expect(404);
     });
 });

@@ -32,7 +32,9 @@ const gracefulShutdown = async () => {
 
     // Force close server after 10 secs
     setTimeout(() => {
-        logger.error('Could not close connections in time, forcefully shutting down');
+        logger.error(
+            'Could not close connections in time, forcefully shutting down'
+        );
         process.exit(1);
     }, 10000);
 };

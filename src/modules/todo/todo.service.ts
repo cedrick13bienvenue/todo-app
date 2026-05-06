@@ -1,4 +1,9 @@
-import { Todo, CreateTodoDTO, UpdateTodoDTO, todoRepository } from './todo.model';
+import {
+    Todo,
+    CreateTodoDTO,
+    UpdateTodoDTO,
+    todoRepository,
+} from './todo.model';
 
 export class TodoService {
     async create(data: CreateTodoDTO): Promise<Todo> {
@@ -21,7 +26,11 @@ export class TodoService {
         return todoRepository.delete(id);
     }
 
-    async getStats(): Promise<{ total: number; completed: number; pending: number }> {
+    async getStats(): Promise<{
+        total: number;
+        completed: number;
+        pending: number;
+    }> {
         return todoRepository.getStats();
     }
 }

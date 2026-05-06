@@ -38,7 +38,9 @@ const router = Router();
  *       200:
  *         description: List of todos
  */
-router.post('/', validate(createTodoSchema), (req, res) => todoController.create(req, res));
+router.post('/', validate(createTodoSchema), (req, res) =>
+    todoController.create(req, res)
+);
 router.get('/', (req, res) => todoController.getAll(req, res));
 
 /**
@@ -81,7 +83,7 @@ router.get('/stats', (req, res) => todoController.getStats(req, res));
  *         description: The todo
  *       404:
  *         description: Not found
- * 
+ *
  *   delete:
  *     summary: Delete a todo
  *     tags: [Todos]
@@ -94,7 +96,7 @@ router.get('/stats', (req, res) => todoController.getStats(req, res));
  *     responses:
  *       204:
  *         description: Deleted successfully
- * 
+ *
  *   patch:
  *     summary: Update a todo
  *     tags: [Todos]
@@ -120,7 +122,9 @@ router.get('/stats', (req, res) => todoController.getStats(req, res));
  *         description: Updated todo
  */
 router.get('/:id', (req, res) => todoController.getById(req, res));
-router.patch('/:id', validate(updateTodoSchema), (req, res) => todoController.update(req, res));
+router.patch('/:id', validate(updateTodoSchema), (req, res) =>
+    todoController.update(req, res)
+);
 router.delete('/:id', (req, res) => todoController.delete(req, res));
 
 export const todoRouter = router;

@@ -20,7 +20,9 @@ export class TodoRepository {
     }
 
     async findAll(): Promise<Todo[]> {
-        const result = await pool.query('SELECT id, title, completed, created_at as "createdAt" FROM todos ORDER BY created_at DESC');
+        const result = await pool.query(
+            'SELECT id, title, completed, created_at as "createdAt" FROM todos ORDER BY created_at DESC'
+        );
         return result.rows;
     }
 
@@ -59,11 +61,17 @@ export class TodoRepository {
     }
 
     async delete(id: string): Promise<boolean> {
-        const result = await pool.query('DELETE FROM todos WHERE id = $1', [id]);
+        const result = await pool.query('DELETE FROM todos WHERE id = $1', [
+            id,
+        ]);
         return (result.rowCount ?? 0) > 0;
     }
 
-    async getStats(): Promise<{ total: number; completed: number; pending: number }> {
+    async getStats(): Promise<{
+        total: number;
+        completed: number;
+        pending: number;
+    }> {
         const result = await pool.query(`
             SELECT 
                 COUNT(*) as total,
@@ -74,7 +82,7 @@ export class TodoRepository {
         return {
             total: parseInt(result.rows[0].total),
             completed: parseInt(result.rows[0].completed),
-            pending: parseInt(result.rows[0].pending)
+            pending: parseInt(result.rows[0].pending),
         };
     }
 }

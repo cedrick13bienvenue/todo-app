@@ -23,7 +23,10 @@ export class TodoController {
     });
 
     update = asyncHandler(async (req: Request, res: Response) => {
-        const updated = await todoService.update(req.params.id as string, req.body);
+        const updated = await todoService.update(
+            req.params.id as string,
+            req.body
+        );
         if (!updated) {
             res.status(404).json({ error: 'Todo not found' });
             return;

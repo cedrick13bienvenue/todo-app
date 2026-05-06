@@ -1,21 +1,28 @@
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-import { todoRouter } from './modules/todo/todo.router';
+import rateLimit from 'express-rate-limit';
+import { todoRouter } from './modules/todo/todo-router';
 import { httpLogger } from './common/middleware/httpLogger';
-
+import { errorHandler } from './common/middleware/errorHandler';
 
 const app = express();
 
 // Middleware
-app.use(helmet({
-    contentSecurityPolicy: false,
-}));
+app.use(helmet());
 app.use(cors());
 app.use(express.json());
 app.use(httpLogger);
 
-import { healthRouter } from './modules/health/health.router';
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // limit each IP to 100 requests per windowMs
+    standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+    legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+});
+app.use(limiter);
+
+import { healthRouter } from './modules/health/health-router';
 import { metricsRegistry } from './modules/health/metrics';
 
 // Routes
@@ -36,5 +43,7 @@ import { specs } from './config/swagger';
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
+// Error handling middleware should be the last one
+app.use(errorHandler);
 
 export { app };

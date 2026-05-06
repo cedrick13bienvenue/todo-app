@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { todoController } from './todo.controller';
+import { todoController } from './todo-controller';
 import { validate } from '../../common/middleware/validate';
-import { createTodoSchema, updateTodoSchema } from './todo.schema';
+import { createTodoSchema, updateTodoSchema } from './todo-schema';
 
 const router = Router();
 
@@ -30,6 +30,10 @@ const router = Router();
  *     responses:
  *       201:
  *         description: Todo created
+ *       400:
+ *         description: Invalid input data
+ *       500:
+ *         description: Internal server error
  *
  *   get:
  *     summary: Get all todos
@@ -37,9 +41,11 @@ const router = Router();
  *     responses:
  *       200:
  *         description: List of todos
+ *       500:
+ *         description: Internal server error
  */
-router.post('/', validate(createTodoSchema), (req, res) => todoController.create(req, res));
-router.get('/', (req, res) => todoController.getAll(req, res));
+router.post('/', validate(createTodoSchema), (req, res, next) => todoController.create(req, res, next));
+router.get('/', (req, res, next) => todoController.getAll(req, res, next));
 
 /**
  * @swagger
@@ -62,7 +68,7 @@ router.get('/', (req, res) => todoController.getAll(req, res));
  *                 pending:
  *                   type: number
  */
-router.get('/stats', (req, res) => todoController.getStats(req, res));
+router.get('/stats', (req, res, next) => todoController.getStats(req, res, next));
 
 /**
  * @swagger
@@ -81,7 +87,7 @@ router.get('/stats', (req, res) => todoController.getStats(req, res));
  *         description: The todo
  *       404:
  *         description: Not found
- * 
+ *
  *   delete:
  *     summary: Delete a todo
  *     tags: [Todos]
@@ -94,7 +100,7 @@ router.get('/stats', (req, res) => todoController.getStats(req, res));
  *     responses:
  *       204:
  *         description: Deleted successfully
- * 
+ *
  *   patch:
  *     summary: Update a todo
  *     tags: [Todos]
@@ -119,8 +125,8 @@ router.get('/stats', (req, res) => todoController.getStats(req, res));
  *       200:
  *         description: Updated todo
  */
-router.get('/:id', (req, res) => todoController.getById(req, res));
-router.patch('/:id', validate(updateTodoSchema), (req, res) => todoController.update(req, res));
-router.delete('/:id', (req, res) => todoController.delete(req, res));
+router.get('/:id', (req, res, next) => todoController.getById(req, res, next));
+router.patch('/:id', validate(updateTodoSchema), (req, res, next) => todoController.update(req, res, next));
+router.delete('/:id', (req, res, next) => todoController.delete(req, res, next));
 
 export const todoRouter = router;

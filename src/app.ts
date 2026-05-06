@@ -4,13 +4,12 @@ import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import { todoRouter } from './modules/todo/todo.router';
 import { httpLogger } from './common/middleware/httpLogger';
+import { errorHandler } from './common/middleware/errorHandler';
 
 const app = express();
 
 // Middleware
-app.use(helmet({
-    contentSecurityPolicy: false,
-}));
+app.use(helmet());
 app.use(cors());
 app.use(express.json());
 app.use(httpLogger);
@@ -44,5 +43,7 @@ import { specs } from './config/swagger';
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
+// Error handling middleware should be the last one
+app.use(errorHandler);
 
 export { app };

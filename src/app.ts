@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
-import { todoRouter } from './modules/todo/todo.router';
+import { todoRouter } from './modules/todo/todo-router';
 import { httpLogger } from './common/middleware/httpLogger';
 import { errorHandler } from './common/middleware/errorHandler';
 
@@ -22,7 +22,7 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 
-import { healthRouter } from './modules/health/health.router';
+import { healthRouter } from './modules/health/health-router';
 import { metricsRegistry } from './modules/health/metrics';
 
 // Routes

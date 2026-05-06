@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { todoService } from './todo.service';
+import { todoService } from './todo-service';
 import { asyncHandler } from '../../common/utils/asyncHandler';
 
 export class TodoController {

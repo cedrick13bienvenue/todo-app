@@ -1,8 +1,8 @@
 import { describe, it, expect, beforeEach, jest } from '@jest/globals';
-import { todoService } from '../src/modules/todo/todo.service';
-import { todoRepository } from '../src/modules/todo/todo.model';
+import { todoService } from '../src/modules/todo/todo-service';
+import { todoRepository } from '../src/modules/todo/todo-model';
 
-jest.mock('../src/modules/todo/todo.model', () => ({
+jest.mock('../src/modules/todo/todo-model', () => ({
     todoRepository: {
         create: jest.fn(),
         findAll: jest.fn(),

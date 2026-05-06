@@ -3,7 +3,7 @@ import {
     CreateTodoDTO,
     UpdateTodoDTO,
     todoRepository,
-} from './todo.model';
+} from './todo-model';
 
 export class TodoService {
     async create(data: CreateTodoDTO): Promise<Todo> {

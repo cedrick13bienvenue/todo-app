@@ -30,6 +30,10 @@ const router = Router();
  *     responses:
  *       201:
  *         description: Todo created
+ *       400:
+ *         description: Invalid input data
+ *       500:
+ *         description: Internal server error
  *
  *   get:
  *     summary: Get all todos
@@ -37,11 +41,11 @@ const router = Router();
  *     responses:
  *       200:
  *         description: List of todos
+ *       500:
+ *         description: Internal server error
  */
-router.post('/', validate(createTodoSchema), (req, res) =>
-    todoController.create(req, res)
-);
-router.get('/', (req, res) => todoController.getAll(req, res));
+router.post('/', validate(createTodoSchema), (req, res, next) => todoController.create(req, res, next));
+router.get('/', (req, res, next) => todoController.getAll(req, res, next));
 
 /**
  * @swagger

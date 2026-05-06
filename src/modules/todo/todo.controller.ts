@@ -1,69 +1,49 @@
 import { Request, Response } from 'express';
 import { todoService } from './todo.service';
+import { asyncHandler } from '../../common/utils/asyncHandler';
 
 export class TodoController {
-    async create(req: Request, res: Response) {
-        try {
-            const todo = await todoService.create(req.body);
-            res.status(201).json(todo);
-        } catch (error) {
-            res.status(500).json({ error: 'Internal Server Error' });
-        }
-    }
+    create = asyncHandler(async (req: Request, res: Response) => {
+        const todo = await todoService.create(req.body);
+        res.status(201).json(todo);
+    });
 
-    async getAll(req: Request, res: Response) {
-        try {
-            const todos = await todoService.findAll();
-            res.status(200).json(todos);
-        } catch (error) {
-            res.status(500).json({ error: 'Internal Server Error' });
-        }
-    }
+    getAll = asyncHandler(async (req: Request, res: Response) => {
+        const todos = await todoService.findAll();
+        res.status(200).json(todos);
+    });
 
-    async getById(req: Request, res: Response) {
-        try {
-            const todo = await todoService.findById(req.params.id as string);
-            if (!todo) {
-                return res.status(404).json({ error: 'Todo not found' });
-            }
-            res.status(200).json(todo);
-        } catch (error) {
-            res.status(500).json({ error: 'Internal Server Error' });
+    getById = asyncHandler(async (req: Request, res: Response) => {
+        const todo = await todoService.findById(req.params.id as string);
+        if (!todo) {
+            res.status(404).json({ error: 'Todo not found' });
+            return;
         }
-    }
+        res.status(200).json(todo);
+    });
 
-    async update(req: Request, res: Response) {
-        try {
-            const updated = await todoService.update(req.params.id as string, req.body);
-            if (!updated) {
-                return res.status(404).json({ error: 'Todo not found' });
-            }
-            res.status(200).json(updated);
-        } catch (error) {
-            res.status(500).json({ error: 'Internal Server Error' });
+    update = asyncHandler(async (req: Request, res: Response) => {
+        const updated = await todoService.update(req.params.id as string, req.body);
+        if (!updated) {
+            res.status(404).json({ error: 'Todo not found' });
+            return;
         }
-    }
+        res.status(200).json(updated);
+    });
 
-    async delete(req: Request, res: Response) {
-        try {
-            const success = await todoService.delete(req.params.id as string);
-            if (!success) {
-                return res.status(404).json({ error: 'Todo not found' });
-            }
-            res.status(204).send();
-        } catch (error) {
-            res.status(500).json({ error: 'Internal Server Error' });
+    delete = asyncHandler(async (req: Request, res: Response) => {
+        const success = await todoService.delete(req.params.id as string);
+        if (!success) {
+            res.status(404).json({ error: 'Todo not found' });
+            return;
         }
-    }
+        res.status(204).send();
+    });
 
-    async getStats(req: Request, res: Response) {
-        try {
-            const stats = await todoService.getStats();
-            res.status(200).json(stats);
-        } catch (error) {
-            res.status(500).json({ error: 'Internal Server Error' });
-        }
-    }
+    getStats = asyncHandler(async (req: Request, res: Response) => {
+        const stats = await todoService.getStats();
+        res.status(200).json(stats);
+    });
 }
 
 export const todoController = new TodoController();

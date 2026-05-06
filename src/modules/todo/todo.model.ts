@@ -48,7 +48,7 @@ export class TodoRepository {
             index++;
         }
 
-        if (values.length === 0) return this.findById(id) || null;
+        if (values.length === 0) return (await this.findById(id)) || null;
 
         query = query.slice(0, -2); // remove trailing comma and space
         query += ` WHERE id = $${index} RETURNING id, title, completed, created_at as "createdAt"`;
